@@ -19,7 +19,8 @@ body {
     justify-content: center;
     align-items: center;
     margin: 18px 18px;
-    height: 20%;
+    max-width: 240px;
+    height: 144px;
     background-color: #57744c;
     border-radius: 15px;
 }
