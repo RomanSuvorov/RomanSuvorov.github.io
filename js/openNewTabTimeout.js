@@ -22,8 +22,34 @@ const timer = (initSeconds = 2)  => {
 };
 
 const openNewTab = (url = URL) => {
-    const newTab = window.open(url, '_blank', 'noopener');
-    console.log(newTab);
+    // const newTab = window.open(url, '_blank', 'noopener');
+    // console.log(newTab);
+    const link = window.document.createElement('a');
+    link.target = '_blank';
+    link.href = url;
+    // const e = window.document.createEvent("MouseEvents");
+    // e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    
+    const event = new MouseEvent(
+        'click',
+        {
+            screenX: 0,
+            screenY: 0,
+            clientX: 0,
+            clientY: 0,
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            metaKey: false,
+            button: 0,
+            relatedTarget: null,
+            detail: 0,
+            view: window,
+            cancelable: true,
+            bubbles: true,
+        });
+    const result = link.dispatchEvent(event);
+    console.log('result', result);
 }
 
 const showTimer = (seconds) => {
