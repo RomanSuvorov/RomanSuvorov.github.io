@@ -6,7 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
     bodySelector.style.color = '#ded9d9';
     console.info('DOM loaded successful');
     
-    timer();
+    const isBlocked = checkIsPopupBlocked();
+    console.log('isBlocked', isBlocked);
+    if (isBlocked) {
+        const errorSelector = document.getElementsByClassName('error')[0];
+    
+        errorSelector.textContent = 'Please, disable your popup blocker!';
+    } else {
+        timer();
+    }
     
     const link = window.document.createElement('a');
     link.target = '_blank';
@@ -16,6 +24,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnWrapper = document.getElementsByClassName('btnWrapper')[0];
     btnWrapper.append(link);
 });
+
+const checkIsPopupBlocked = () => {
+    const newWindow = window.open(null, 'popup', 'left=100,top=100,width=1,height=1');
+    try {
+        console.log('newWindow');
+        newWindow.close();
+        return false;
+    } catch (error) {
+        console.error(error);
+        return true;
+    }
+}
 
 const timer = (initSeconds = 2)  => {
     let secondsForTimeout = initSeconds * 1000;
@@ -63,27 +83,30 @@ const openNewTab = (url = URL) => {
 const openNewTabViaButton = () => {
     console.log('openNewTabViaButton');
     const link = document.getElementsByClassName('link')[0];
-    console.log(link);
-    // const event = new MouseEvent(
-    //     'click',
-    //     {
-    //         screenX: 0,
-    //         screenY: 0,
-    //         clientX: 0,
-    //         clientY: 0,
-    //         ctrlKey: false,
-    //         shiftKey: false,
-    //         altKey: false,
-    //         metaKey: false,
-    //         button: 0,
-    //         relatedTarget: null,
-    //         detail: 0,
-    //         view: window,
-    //         cancelable: true,
-    //         bubbles: true,
-    //     });
-    // link.dispatchEvent(event);
-    link.click();
+    // console.log(link);
+    const event = new MouseEvent(
+        'click',
+        {
+            screenX: 0,
+            screenY: 0,
+            clientX: 0,
+            clientY: 0,
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            metaKey: false,
+            button: 0,
+            relatedTarget: null,
+            detail: 0,
+            view: window,
+            cancelable: true,
+            bubbles: true,
+        });
+    link.dispatchEvent(event);
+    // const a = link.click();
+    // console.log('result', a);
+    // window.open(a, '_blank');
+    // window.location.replace(URL);
 }
 
 const showTimer = (seconds) => {
