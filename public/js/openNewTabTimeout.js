@@ -1,10 +1,16 @@
 let interval;
+let secondsLeft = 4;
 const URL = 'https://www.youtube.com/watch?v=mbov4Rs0F3k';
 document.addEventListener('DOMContentLoaded', () => {
-    const bodySelector = document.getElementsByTagName('body')[0];
+    let bodySelector = document.getElementsByTagName('body')[0];
     bodySelector.style.backgroundColor = 'rgb(78,119,5)';
     bodySelector.style.color = '#ded9d9';
     console.info('DOM loaded successful');
+    
+    const timerWrapper = document.getElementsByClassName('timerWrapper')[0];
+    const buttonStop = window.document.createElement('button');
+    buttonStop.classList.add('btn_stop');
+    timerWrapper.append(buttonStop);
     // bodySelector.append()
     
     // const isBlocked = checkIsPopupBlocked();
@@ -16,12 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // } else {
         timer();
     // }
-    
-    const timerWrapper = document.getElementsByClassName('timerWrapper')[0];
-    const buttonStop = window.document.createElement('button');
-    buttonStop.onclick = stopTimer;
-    buttonStop.innerText = 'Stop timer';
-    timerWrapper.append(buttonStop);
 });
 
 const checkIsPopupBlocked = () => {
@@ -36,25 +36,20 @@ const checkIsPopupBlocked = () => {
     }
 }
 
-const timer = (initSeconds = 4)  => {
-    let secondsForTimeout = initSeconds * 1000;
+const timer = ()  => {
+    const buttonStop = document.getElementsByClassName('btn_stop')[0];
+    buttonStop.innerText = 'Stop';
+    buttonStop.onclick = stopTimer;
+
     const intervalSeconds = 1000;
 
-    showTimer(secondsForTimeout);
+    showTimer();
     
     interval = setInterval(() => {
-        secondsForTimeout -= 1000;
-        showTimer(secondsForTimeout);
+        secondsLeft -= 1;
+        showTimer();
     }, intervalSeconds);
 };
-
-const openNewTab = (url = URL) => {
-    // const newTab = window.open(url, '_blank', 'noopener');
-    // console.log(newTab);
-    const link = window.document.createElement('a');
-    link.target = '_blank';
-    link.href = url;
-}
 
 const openNewTabViaButton = () => {
     console.log('openNewTabViaButton');
@@ -87,20 +82,26 @@ const openNewTabViaButton = () => {
     // history.pushState(null, '', '')
 }
 
-const showTimer = (seconds) => {
-    if (seconds < 0) return clearInterval(interval);
+const showTimer = () => {
+    if (secondsLeft < 0) return clearInterval(interval);
     
     const secondsSelector = document.getElementsByClassName('secondsContainer')[0];
     
-    if (seconds === 0) {
+    if (secondsLeft === 0) {
+        const buttonStop = document.getElementsByClassName('btn_stop')[0];
+        buttonStop.onclick = timer;
+        buttonStop.innerText = 'Start';
+        secondsLeft = 4;
         secondsSelector.textContent = 'Fired!';
-        // openNewTab();
         openNewTabViaButton();
     } else {
-        secondsSelector.textContent = (seconds / 1000).toString();
+        secondsSelector.textContent = (secondsLeft).toString();
     }
 };
 
 const stopTimer = () => {
     clearInterval(interval);
+    const buttonStop = document.getElementsByClassName('btn_stop')[0];
+    buttonStop.onclick = timer;
+    buttonStop.innerText = 'Continue';
 }
