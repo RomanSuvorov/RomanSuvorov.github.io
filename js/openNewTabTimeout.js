@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     console.info('DOM loaded successful');
     // bodySelector.append()
     
-    const isBlocked = checkIsPopupBlocked();
-    console.log('isBlocked', isBlocked);
+    // const isBlocked = checkIsPopupBlocked();
+    // console.log('isBlocked', isBlocked);
     // if (isBlocked) {
     //     const errorSelector = document.getElementsByClassName('error')[0];
     //
@@ -17,13 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
         timer();
     // }
     
-    const link = window.document.createElement('a');
-    link.target = '_blank';
-    link.classList.add('link');
-    link.setAttribute('href', URL);
-    link.innerText = 'Open new tab!';
     const btnWrapper = document.getElementsByClassName('btnWrapper')[0];
-    btnWrapper.append(link);
+    const buttonStop = window.document.createElement('button');
+    buttonStop.onclick = stopTimer;
+    buttonStop.innerText = 'Stop timer';
+    btnWrapper.append(buttonStop);
 });
 
 const checkIsPopupBlocked = () => {
@@ -104,3 +102,7 @@ const showTimer = (seconds) => {
         secondsSelector.textContent = (seconds / 1000).toString();
     }
 };
+
+const stopTimer = () => {
+    clearInterval(interval);
+}
