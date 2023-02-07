@@ -7,6 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     console.info('DOM loaded successful');
     
     timer();
+    
+    const link = window.document.createElement('a');
+    link.target = '_blank';
+    link.href = URL;
+    link.innerText = 'Open new tab!';
+    const btnWrapper = document.getElementsByClassName('btnWrapper')[0];
+    btnWrapper.append(link);
 });
 
 const timer = (initSeconds = 2)  => {
