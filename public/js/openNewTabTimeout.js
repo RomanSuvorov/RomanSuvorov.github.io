@@ -2,7 +2,7 @@ let interval;
 const URL = 'https://www.youtube.com/watch?v=mbov4Rs0F3k';
 document.addEventListener('DOMContentLoaded', () => {
     const bodySelector = document.getElementsByTagName('body')[0];
-    bodySelector.style.backgroundColor = 'rgba(18,52,5,0.8)';
+    bodySelector.style.backgroundColor = 'rgb(78,119,5)';
     bodySelector.style.color = '#ded9d9';
     console.info('DOM loaded successful');
     // bodySelector.append()
@@ -17,11 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
         timer();
     // }
     
-    const btnWrapper = document.getElementsByClassName('btnWrapper')[0];
+    const timerWrapper = document.getElementsByClassName('timerWrapper')[0];
     const buttonStop = window.document.createElement('button');
     buttonStop.onclick = stopTimer;
     buttonStop.innerText = 'Stop timer';
-    btnWrapper.append(buttonStop);
+    timerWrapper.append(buttonStop);
 });
 
 const checkIsPopupBlocked = () => {
@@ -83,9 +83,7 @@ const openNewTabViaButton = () => {
     // console.log('result', a);
     // window.open(a, '_blank');
     // window.location.replace(URL);
-    const pathname = window.location.pathname.split('/');
-    console.log(window.location.pathname.split('/'));
-    window.location.assign('../templates/page1.html');
+    window.location.assign('public/templates/page1.html');
     // history.pushState(null, '', '')
 }
 
