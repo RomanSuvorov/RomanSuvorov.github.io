@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const link = window.document.createElement('a');
     link.target = '_blank';
-    link.href = URL;
+    link.classList.add('link');
+    link.setAttribute('href', URL);
     link.innerText = 'Open new tab!';
     const btnWrapper = document.getElementsByClassName('btnWrapper')[0];
     btnWrapper.append(link);
@@ -59,6 +60,32 @@ const openNewTab = (url = URL) => {
     console.log('result', result);
 }
 
+const openNewTabViaButton = () => {
+    console.log('openNewTabViaButton');
+    const link = document.getElementsByClassName('link')[0];
+    console.log(link);
+    // const event = new MouseEvent(
+    //     'click',
+    //     {
+    //         screenX: 0,
+    //         screenY: 0,
+    //         clientX: 0,
+    //         clientY: 0,
+    //         ctrlKey: false,
+    //         shiftKey: false,
+    //         altKey: false,
+    //         metaKey: false,
+    //         button: 0,
+    //         relatedTarget: null,
+    //         detail: 0,
+    //         view: window,
+    //         cancelable: true,
+    //         bubbles: true,
+    //     });
+    // link.dispatchEvent(event);
+    link.click();
+}
+
 const showTimer = (seconds) => {
     if (seconds < 0) return clearInterval(interval);
     
@@ -66,7 +93,8 @@ const showTimer = (seconds) => {
     
     if (seconds === 0) {
         secondsSelector.textContent = 'Fired!';
-        openNewTab();
+        // openNewTab();
+        openNewTabViaButton();
     } else {
         secondsSelector.textContent = (seconds / 1000).toString();
     }
